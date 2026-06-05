@@ -238,3 +238,11 @@ git push
 - **新闻文章**：`src/news/index.ts` 使用 `import.meta.glob('../../content/news/mdx/{zh,en}/*.mdx')` 构建时发现所有文件，列表页立即加载
 
 文件名（不含扩展名）作为路由标识：`ubuntu.mdx` → `/mirrors/ubuntu`，`2026-03-17-new-mirrors.mdx` → `/news/2026-03-17-new-mirrors`。
+
+---
+
+## 相关文档 / Related Docs
+
+- [项目主页](../README.md) — 功能特性、技术栈、开发调试
+- [运行时数据文件说明](../public/data/README.md) — announcements、local_data、popular-mirrors 等 JSON 文件格式
+- [GitHub Release 子项目配置](../public/data/github-release/README.md) — 添加新 GitHub Release 镜像
