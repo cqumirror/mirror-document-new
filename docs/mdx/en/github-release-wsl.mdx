@@ -1,0 +1,38 @@
+## WSL Mirror Usage Guide
+
+## Address
+
+https://mirrors.cqu.edu.cn/github-release/microsoft/WSL/
+
+## Description
+
+### About WSL
+
+Windows Subsystem for Linux (WSL) is a compatibility layer for running Linux binary executables (ELF format) natively on Windows 10 and Windows Server 2019 and later.
+
+## Supported Architectures
+
+Same as upstream
+
+- arm64
+- x64
+- Universal
+
+## Usage
+
+> See the official [documentation](https://learn.microsoft.com/en-us/windows/wsl/install) "Offline installation" section for detailed instructions.
+
+1. Visit the [github-release/microsoft/WSL](https://mirrors.cqu.edu.cn/github-release/microsoft/WSL/) directory to download and install your preferred version.
+2. Open PowerShell as Administrator and run the following command to enable the Virtual Machine Platform feature (may require restart):
+
+```bash
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+
+3. Install distributions via `.wsl` files. See [WSL Distribution Mirror Guide](/mirrors/wsl-distributions) for more information.
+
+> Only some distribution `.wsl` files are available on this mirror.
+
+## Related Links
+
+- Official Documentation: [https://learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install)

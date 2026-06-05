@@ -1,0 +1,38 @@
+## WSL 镜像使用帮助
+
+## 地址
+
+https://mirrors.cqu.edu.cn/github-release/microsoft/WSL/
+
+## 说明
+
+### WSL 简介
+
+适用于 Linux 的 Windows 子系统（Windows Subsystem for Linux，简称 WSL）是一个为在 Windows 10 和 Windows Server 2019 以上能够原生运行 Linux 二进制可执行文件（ELF 格式）的兼容层。
+
+## 收录架构
+
+与上游保持一致
+
+- arm64
+- x64
+- Universal
+
+## 使用说明
+
+> 建议查看官方[帮助文档](https://learn.microsoft.com/zh-cn/windows/wsl/install)中"脱机安装"部分以获取更详细的安装说明。
+
+1. 访问镜像站 [github-release/microsoft/WSL](https://mirrors.cqu.edu.cn/github-release/microsoft/WSL/) 目录选择合适版本下载并安装。
+2. 使用管理员权限打开 PowerShell 窗口，运行以下命令启用虚拟机平台可选组件（可能需要重启）：
+
+```bash
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+
+3. 通过 `.wsl` 文件安装发行版，请访问 [WSL 分发版镜像使用帮助](/mirrors/wsl-distributions) 获取更多信息。
+
+> 本站点仅提供部分发行版的 `.wsl` 文件。
+
+## 相关链接
+
+- 官方文档：[https://learn.microsoft.com/zh-cn/windows/wsl/install](https://learn.microsoft.com/zh-cn/windows/wsl/install)
