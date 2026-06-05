@@ -1,0 +1,46 @@
+## MSYS2 镜像使用帮助
+
+## 地址
+
+https://mirrors.cqu.edu.cn/msys2/
+
+## 描述
+
+MSYS2 是 Windows 下的软件发行与构建平台，集成了 MinGW-w64 工具链和 pacman 包管理器。
+
+## 使用说明
+
+编辑 `/etc/pacman.d/mirrorlist.mingw32`，在文件开头添加：
+
+```
+Server = https://mirrors.cqu.edu.cn/msys2/mingw/i686/
+```
+
+编辑 `/etc/pacman.d/mirrorlist.mingw64`，在文件开头添加：
+
+```
+Server = https://mirrors.cqu.edu.cn/msys2/mingw/x86_64/
+```
+
+编辑 `/etc/pacman.d/mirrorlist.msys`，在文件开头添加：
+
+```
+Server = https://mirrors.cqu.edu.cn/msys2/msys/$arch/
+```
+
+然后刷新包数据库：
+
+```bash
+pacman -Syy
+```
+
+或者直接使用一键换源脚本，在 MSYS2 终端中执行：
+
+```bash
+sed -i "s#https\?://mirror.msys2.org/#https://mirrors.cqu.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
+```
+
+## 相关链接
+
+- [MSYS2 官网](https://www.msys2.org/)
+- [MSYS2 文档](https://www.msys2.org/docs/)
