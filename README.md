@@ -40,7 +40,7 @@ mirror-document-new/
 
 ### 文件命名
 
-- 文件名与 `local_data.json` 中的镜像 ID 一致
+- 文件名与 `public/data/local_data.json` 中的镜像 ID 一致
 - 扩展名 `.mdx`
 - 示例：`ubuntu.mdx`、`archlinux.mdx`、`crates.io-index.mdx`
 
@@ -194,7 +194,7 @@ export const meta = {
 1. 在 `docs/mdx/zh/` 下创建 `镜像ID.mdx`
 2. 在 `docs/mdx/en/` 下创建同名文件
 3. 按上述结构编写内容
-4. 确保主项目 `public/local_data.json` 中对应镜像的 `helpUrl` 字段已设置
+4. 确保主项目 `public/data/local_data.json` 中对应镜像的 `helpUrl` 字段已设置
 
 ```bash
 # 示例：添加 crates.io 镜像帮助
