@@ -1,0 +1,48 @@
+## openSUSE Leap 镜像使用帮助
+
+## 地址
+
+https://mirrors.cqu.edu.cn/opensuse/distribution/leap/
+
+## 描述
+
+openSUSE Leap 是 openSUSE 的稳定发行版，适合生产环境和日常使用。
+
+## 收录版本
+
+当前所有受支持的 Leap 版本。
+
+## 使用说明
+
+首先备份原有仓库配置：
+
+```bash
+sudo cp -r /etc/zypp/repos.d /etc/zypp/repos.d.bak
+```
+
+禁用原有仓库：
+
+```bash
+sudo zypper mr -da
+```
+
+添加重庆大学镜像源：
+
+```bash
+sudo zypper ar -fcg https://mirrors.cqu.edu.cn/opensuse/distribution/leap/\$releasever/repo/oss/ CQU-OSS
+sudo zypper ar -fcg https://mirrors.cqu.edu.cn/opensuse/distribution/leap/\$releasever/repo/non-oss/ CQU-Non-OSS
+sudo zypper ar -fcg https://mirrors.cqu.edu.cn/opensuse/update/leap/\$releasever/oss/ CQU-Update-OSS
+sudo zypper ar -fcg https://mirrors.cqu.edu.cn/opensuse/update/leap/\$releasever/non-oss/ CQU-Update-Non-OSS
+```
+
+刷新仓库并更新：
+
+```bash
+sudo zypper ref
+sudo zypper up
+```
+
+## 相关链接
+
+- [openSUSE Leap 官网](https://get.opensuse.org/leap/)
+- [openSUSE 文档](https://doc.opensuse.org/)

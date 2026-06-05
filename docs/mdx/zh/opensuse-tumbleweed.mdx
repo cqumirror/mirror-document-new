@@ -1,0 +1,44 @@
+## openSUSE Tumbleweed 镜像使用帮助
+
+## 地址
+
+https://mirrors.cqu.edu.cn/opensuse/tumbleweed/
+
+## 描述
+
+openSUSE Tumbleweed 是 openSUSE 的滚动发行版，始终提供最新的软件包。
+
+## 使用说明
+
+首先备份原有仓库配置：
+
+```bash
+sudo cp -r /etc/zypp/repos.d /etc/zypp/repos.d.bak
+```
+
+禁用原有仓库：
+
+```bash
+sudo zypper mr -da
+```
+
+添加重庆大学镜像源：
+
+```bash
+sudo zypper ar -fcg https://mirrors.cqu.edu.cn/opensuse/tumbleweed/repo/oss/ CQU-OSS
+sudo zypper ar -fcg https://mirrors.cqu.edu.cn/opensuse/tumbleweed/repo/non-oss/ CQU-Non-OSS
+```
+
+刷新仓库并更新：
+
+```bash
+sudo zypper ref
+sudo zypper dup
+```
+
+> **注意**：Tumbleweed 为滚动发行版，请使用 `zypper dup`（发行版升级）而非 `zypper up` 进行更新。
+
+## 相关链接
+
+- [openSUSE Tumbleweed 官网](https://get.opensuse.org/tumbleweed/)
+- [openSUSE 文档](https://doc.opensuse.org/)
