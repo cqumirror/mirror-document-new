@@ -20,6 +20,13 @@ mirror-document-new/
 │           ├── ubuntu.mdx
 │           ├── archlinux.mdx
 │           └── ...
+├── licenses/
+│   ├── zh/              ← 中文许可证
+│   │   ├── ubuntu.mdx
+│   │   └── ...
+│   └── en/              ← 英文许可证
+│       ├── ubuntu.mdx
+│       └── ...
 └── news/
     └── mdx/
         ├── zh/          ← 中文新闻
@@ -115,6 +122,46 @@ sudo sed -i 's|http://archive.ubuntu.com|https://mirrors.cqu.edu.cn|g' /etc/apt/
 
 ---
 
+## 许可证文档（licenses/）
+
+许可证文档用于展示镜像的许可协议信息，仅部分镜像需要。当存在对应的许可证文件时，镜像详情页会显示「许可证」Tab。
+
+### 文件命名
+
+- 文件名与 `public/data/local_data.json` 中的镜像 ID 一致
+- 扩展名 `.mdx`
+- 示例：`ubuntu.mdx`、`debian.mdx`、`pcl.mdx`
+
+### 内容结构
+
+许可证文档使用标准 Markdown，直接编写许可协议内容：
+
+```markdown
+## 镜像名称 许可协议
+
+### 主要许可
+
+- **核心系统**: GPLv2
+- **文档**: CC BY-SA 4.0
+
+### 镜像内容说明
+
+本站提供的镜像文件与官方内容完全一致，未做任何修改。
+
+### 相关链接
+
+- [官方许可页面](https://example.org/license)
+```
+
+### 注意事项
+
+- 中文和英文版本的文件名必须一一对应
+- 内容使用标准 Markdown，支持标题、列表、链接、加粗等
+- 不需要 YAML frontmatter，直接从内容开始
+- 只有存在对应文件的镜像才会显示「许可证」Tab，无需额外配置
+
+---
+
 ## 新闻文章（news/mdx/）
 
 新闻文章用于发布镜像站公告、新镜像上线通知、维护公告等。
@@ -202,6 +249,18 @@ echo '## crates.io 镜像使用帮助' > docs/mdx/zh/crates.io-index.mdx
 echo '## crates.io Mirror Usage Guide' > docs/mdx/en/crates.io-index.mdx
 ```
 
+## 添加许可证文档
+
+1. 在 `licenses/zh/` 下创建 `镜像ID.mdx`
+2. 在 `licenses/en/` 下创建同名文件
+3. 编写许可协议内容
+
+```bash
+# 示例：添加 Arch Linux 许可证
+echo '## Arch Linux 许可协议' > licenses/zh/archlinux.mdx
+echo '## Arch Linux License' > licenses/en/archlinux.mdx
+```
+
 ## 添加新闻文章
 
 1. 在 `news/mdx/zh/` 下创建 `YYYY-MM-DD-slug.mdx`
@@ -235,6 +294,7 @@ git push
 前端通过以下方式加载本仓库内容：
 
 - **帮助文档**：`src/docs/index.ts` 使用 `import.meta.glob('../../content/docs/mdx/{zh,en}/*.mdx')` 构建时发现所有文件，按需懒加载
+- **许可证文档**：`src/licenses/index.ts` 使用 `import.meta.glob('../../content/licenses/{zh,en}/*.mdx')` 构建时发现所有文件，按需懒加载
 - **新闻文章**：`src/news/index.ts` 使用 `import.meta.glob('../../content/news/mdx/{zh,en}/*.mdx')` 构建时发现所有文件，列表页立即加载
 
 文件名（不含扩展名）作为路由标识：`ubuntu.mdx` → `/mirrors/ubuntu`，`2026-03-17-new-mirrors.mdx` → `/news/2026-03-17-new-mirrors`。
