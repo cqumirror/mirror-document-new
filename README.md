@@ -2,7 +2,7 @@
 
 重庆大学开源软件镜像站（CQU Mirror）前端内容仓库，以 Git 子模块方式引入 [mirror-frontend-new](https://github.com/cqumirror/mirror-frontend-new) 的 `content/` 目录。
 
-本仓库包含两类内容：**帮助文档**（镜像使用帮助）和**新闻文章**（公告、更新通知等）。所有内容以 MDX 格式编写，前端通过 `import.meta.glob` 在构建时自动发现并加载。
+本仓库包含两类内容：**项目文档**（镜像使用帮助和许可证声明）和**新闻文章**（公告、更新通知等）。所有内容以 MDX 格式编写，前端通过 `import.meta.glob` 在构建时自动发现并加载。
 
 ---
 
@@ -11,35 +11,18 @@
 ```
 mirror-document-new/
 ├── docs/
-│   └── mdx/
-│       ├── zh/          ← 中文帮助文档
-│       │   ├── ubuntu.mdx
-│       │   ├── archlinux.mdx
-│       │   └── ...
-│       └── en/          ← 英文帮助文档
-│           ├── ubuntu.mdx
-│           ├── archlinux.mdx
-│           └── ...
-├── licenses/
-│   ├── zh/              ← 中文许可证
-│   │   ├── ubuntu.mdx
-│   │   └── ...
-│   └── en/              ← 英文许可证
-│       ├── ubuntu.mdx
-│       └── ...
+│   ├── ubuntu.mdx       ← 帮助文档与许可证声明
+│   ├── archlinux.mdx
+│   └── ...
 └── news/
     └── mdx/
-        ├── zh/          ← 中文新闻
-        │   ├── 2026-03-17-new-mirrors.mdx
-        │   └── ...
-        └── en/          ← 英文新闻
-            ├── 2026-03-17-new-mirrors.mdx
-            └── ...
+        ├── 2026-03-17-new-mirrors.mdx
+        └── ...
 ```
 
 ---
 
-## 帮助文档（docs/mdx/）
+## 项目文档（docs/）
 
 帮助文档为某个镜像的使用指南，文件名即镜像 ID（如 `ubuntu.mdx` 对应 `/mirrors/ubuntu`）。
 
@@ -120,43 +103,24 @@ sudo sed -i 's|http://archive.ubuntu.com|https://mirrors.cqu.edu.cn|g' /etc/apt/
 
 ---
 
-## 许可证文档（licenses/）
+## 许可证声明
 
-许可证文档用于展示镜像的许可协议信息，仅部分镜像需要。当存在对应的许可证文件时，镜像详情页会显示「许可证」Tab。
+许可证直接写在对应的 `docs/*.mdx` 中，前端会解析声明并显示「许可证」Tab：
 
-### 文件命名
-
-- 文件名与 `public/data/local_data.json` 中的镜像 ID 一致
-- 扩展名 `.mdx`
-- 示例：`ubuntu.mdx`、`debian.mdx`、`pcl.mdx`
-
-### 内容结构
-
-许可证文档使用标准 Markdown，直接编写许可协议内容：
-
-```markdown
-## 镜像名称 许可协议
-
-### 主要许可
-
-- **核心系统**: GPLv2
-- **文档**: CC BY-SA 4.0
-
-### 镜像内容说明
-
-本站提供的镜像文件与官方内容完全一致，未做任何修改。
-
-### 相关链接
-
-- [官方许可页面](https://example.org/license)
+```mdx
+<LicenseGrid licenses={['GPLv2', 'CC BY-SA 4.0']} />
 ```
 
-### 注意事项
+常见许可证会自动链接到官方网站。需要覆盖或添加链接时使用 `links`，键和值均使用引号：
 
-- 中文和英文版本的文件名必须一一对应
-- 内容使用标准 Markdown，支持标题、列表、链接、加粗等
-- 不需要 YAML frontmatter，直接从内容开始
-- 只有存在对应文件的镜像才会显示「许可证」Tab，无需额外配置
+```mdx
+<LicenseGrid
+  licenses={['Custom License']}
+  links={{ 'Custom License': 'https://example.org/license' }}
+/>
+```
+
+不需要许可证展示时不要添加 `LicenseGrid`；不要使用 `Various` 等不明确名称。
 
 ---
 
@@ -236,27 +200,14 @@ export const meta = {
 
 ## 添加新镜像帮助文档
 
-1. 在 `docs/mdx/zh/` 下创建 `镜像ID.mdx`
-2. 在 `docs/mdx/en/` 下创建同名文件
-3. 按上述结构编写内容
+1. 在 `docs/` 下创建 `镜像ID.mdx`
+2. 按上述结构编写内容
+3. 如需许可证，在同一文件添加 `LicenseGrid`
 4. 确保主项目 `public/data/local_data.json` 中对应镜像的 `helpUrl` 字段已设置
 
 ```bash
 # 示例：添加 crates.io 镜像帮助
-echo '## crates.io 镜像使用帮助' > docs/mdx/zh/crates.io-index.mdx
-echo '## crates.io Mirror Usage Guide' > docs/mdx/en/crates.io-index.mdx
-```
-
-## 添加许可证文档
-
-1. 在 `licenses/zh/` 下创建 `镜像ID.mdx`
-2. 在 `licenses/en/` 下创建同名文件
-3. 编写许可协议内容
-
-```bash
-# 示例：添加 Arch Linux 许可证
-echo '## Arch Linux 许可协议' > licenses/zh/archlinux.mdx
-echo '## Arch Linux License' > licenses/en/archlinux.mdx
+echo '## crates.io 镜像使用帮助' > docs/crates.io-index.mdx
 ```
 
 ## 添加新闻文章
@@ -291,9 +242,9 @@ git push
 
 前端通过以下方式加载本仓库内容：
 
-- **帮助文档**：`src/docs/index.ts` 使用 `import.meta.glob('../../content/docs/mdx/{zh,en}/*.mdx')` 构建时发现所有文件，按需懒加载
-- **许可证文档**：`src/licenses/index.ts` 使用 `import.meta.glob('../../content/licenses/{zh,en}/*.mdx')` 构建时发现所有文件，按需懒加载
-- **新闻文章**：`src/news/index.ts` 使用 `import.meta.glob('../../content/news/mdx/{zh,en}/*.mdx')` 构建时发现所有文件，列表页立即加载
+- **项目文档**：`src/docs/index.ts` 使用 `import.meta.glob('../../content/docs/*.mdx')` 构建时发现所有文件，按需懒加载
+- **许可证声明**：`src/licenses/index.ts` 从同一份 `content/docs/*.mdx` 源码解析 `LicenseGrid`
+- **新闻文章**：`src/news/index.ts` 使用 `import.meta.glob('../../content/news/mdx/*.mdx')` 构建时发现所有文件，列表页立即加载
 
 文件名（不含扩展名）作为路由标识：`ubuntu.mdx` → `/mirrors/ubuntu`，`2026-03-17-new-mirrors.mdx` → `/news/2026-03-17-new-mirrors`。
 
