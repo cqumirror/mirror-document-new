@@ -143,11 +143,9 @@ sudo sed -i 's|http://archive.ubuntu.com|https://mirrors.cqu.edu.cn|g' /etc/apt/
 ```javascript
 export const meta = {
     title: "中文标题",
-    titleEn: "English Title",
     date: "2026-03-17",
     author: "作者名",
     summary: "中文摘要，简要描述文章内容",
-    summaryEn: "English summary, briefly describing the article",
     tags: ["标签1", "标签2"],
 }
 ```
@@ -157,11 +155,9 @@ export const meta = {
 | 字段 | 类型 | 是否必须 | 说明 |
 |------|------|----------|------|
 | `title` | string | **必须** | 中文标题 |
-| `titleEn` | string | **必须** | 英文标题 |
 | `date` | string | **必须** | 发布日期，格式 `YYYY-MM-DD` |
 | `author` | string | 推荐 | 作者姓名 |
 | `summary` | string | **必须** | 中文摘要（一行） |
-| `summaryEn` | string | **必须** | 英文摘要（一行） |
 | `tags` | string[] | 推荐 | 标签数组，如 `["新镜像", "公告"]` |
 
 ### 正文
@@ -171,11 +167,9 @@ meta 导出之后是标准 Markdown 正文：
 ```markdown
 export const meta = {
     title: "新镜像公告",
-    titleEn: "New Mirror Announcement",
     date: "2026-03-17",
     author: "Haoran Tan",
     summary: "新增GitHub Release镜像",
-    summaryEn: "New GitHub Release mirror added",
     tags: ["新镜像", "公告"],
 }
 
@@ -192,7 +186,6 @@ export const meta = {
 ### 注意事项
 
 - 正文中的链接可以使用相对路径，如 `/mirrors/ubuntu`、`/github-release`
-- 中文和英文版本的正文内容应语义一致，但不要求逐字翻译
 - meta 中的 `tags` 使用中文标签（前端会直接展示）
 - 不需要 YAML frontmatter（使用 `export const meta` 代替）
 
